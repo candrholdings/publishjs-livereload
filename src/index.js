@@ -59,19 +59,19 @@
 
         connections = Object.getOwnPropertyNames(connections).map(function (id) { return connections[id]; });
 
-        if (connections.length) {
-            that._publishjs.log([
-                'Pushing ',
-                urls.length,
-                ' change',
-                urls.length === 1 ? '' : 's',
-                ' to ',
-                connections.length,
-                ' LiveReload client(s)'
-            ].join(''));
-        } else {
-            return that._publishjs.log('No LiveReload clients were connected');
+        if (!connections.length) {
+            return;
         }
+
+        that._publishjs.log([
+            'Pushing ',
+            urls.length,
+            ' change',
+            urls.length === 1 ? '' : 's',
+            ' to ',
+            connections.length,
+            ' LiveReload client(s)'
+        ].join(''));
 
         connections.forEach(function (connection) {
             urls.forEach(function (url) {

@@ -26,12 +26,12 @@
         // }).on('command', function (connection, message) {
         //     console.log(message);
         }).on('error', function (err, connection) {
-            publishjs.log('Failed to communicate with LiveReload client "' + connection.id + '" due to "' + err + '"');
+            publishjs.log('livereload', 'Failed to communicate with browser "' + connection.id + '" due to "' + err + '"');
             delete connections[connection.id];
         }).on('livereload.js', function (req, res) {
             fs.readFile(livereloadJSPath, function (err, data) {
                 if (err) {
-                    publishjs.log('Failed to read "livereload/livereload.js" due to "' + err + '"');
+                    publishjs.log('livereload', 'Failed to read "livereload.js" due to "' + err + '"');
                     res.writeHead(500);
                     res.end();
                 } else {
@@ -42,7 +42,7 @@
         }).on('httprequest', function (req, res) {
             res.writeHead(404).end();
         }).listen(function (err) {
-            err && publishjs.log('LiveReload server failed to start due to "' + err + '"');
+            err && publishjs.log('livereload', 'Server failed to start due to "' + err + '"');
         });
     }
 
@@ -63,14 +63,12 @@
             return;
         }
 
-        that._publishjs.log([
-            'Pushing ',
+        that._publishjs.log('livereload', [
+            'Pushed ',
             urls.length,
-            ' change',
-            urls.length === 1 ? '' : 's',
-            ' to ',
+            ' change(s) to ',
             connections.length,
-            ' LiveReload client(s)'
+            ' client(s)'
         ].join(''));
 
         connections.forEach(function (connection) {

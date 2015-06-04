@@ -1,0 +1,32 @@
+{
+  "name": "publishjs-livereload",
+  "version": "0.0.1-dev",
+  "description": "Integrate LiveReload with PublishJS",
+  "keywords": [
+    "livereload",
+    "grunt",
+    "gulp",
+    "publishjs"
+  ],
+  "license": "MIT",
+  "email": "william.wong@candrholdings.com",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/candrholdings/publishjs-livereload.git"
+  },
+  "scripts": {
+    "test": "vows src/test/*-test.js --spec"
+  },
+  "dependencies": {
+    "async-linq": "^1.0.2",
+    "livereload-js": "^2.2.2",
+    "livereload-server": "^0.2.3",
+    "publishjs": "file:..\\core"
+  },
+  "devDependencies": {
+    "async": "^1.0.0",
+    "async-linq": "^1.0.2",
+    "vows": "^0.8.1"
+  }
+}

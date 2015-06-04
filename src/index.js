@@ -1,7 +1,8 @@
 !function (fs, linq, path) {
     'use strict';
 
-    var livereloadJSPath = path.resolve(require.resolve('livereload-js'), '../../dist/livereload.js');
+    var LOG_FACILITY = 'livereload',
+        livereloadJSPath = path.resolve(require.resolve('livereload-js'), '../../dist/livereload.js');
 
     function LiveReloadServer(options) {
         this._options = options || {};
@@ -26,12 +27,12 @@
         // }).on('command', function (connection, message) {
         //     console.log(message);
         }).on('error', function (err, connection) {
-            publishjs.log('livereload', 'Failed to communicate with browser "' + connection.id + '" due to "' + err + '"');
+            publishjs.log(LOG_FACILITY, 'Failed to communicate with browser "' + connection.id + '" due to "' + err + '"');
             delete connections[connection.id];
         }).on('livereload.js', function (req, res) {
             fs.readFile(livereloadJSPath, function (err, data) {
                 if (err) {
-                    publishjs.log('livereload', 'Failed to read "livereload.js" due to "' + err + '"');
+                    publishjs.log(LOG_FACILITY, 'Failed to read "livereload.js" due to "' + err + '"');
                     res.writeHead(500);
                     res.end();
                 } else {
@@ -42,7 +43,7 @@
         }).on('httprequest', function (req, res) {
             res.writeHead(404).end();
         }).listen(function (err) {
-            err && publishjs.log('livereload', 'Server failed to start due to "' + err + '"');
+            err && publishjs.log(LOG_FACILITY, 'Server failed to start due to "' + err + '"');
         });
     }
 
@@ -63,7 +64,7 @@
             return;
         }
 
-        that._publishjs.log('livereload', [
+        that._publishjs.log(LOG_FACILITY, [
             'Pushed ',
             urls.length,
             ' change(s) to ',
@@ -87,10 +88,14 @@
 
         return {
             _livereload: livereload,
-            onmix: function (publishjs) {
-                livereload.init(publishjs);
+            onmix: function () {
+                livereload.init(this);
             },
             onbuild: function (outputs) {
+                if (!this.options.watch) {
+                    this.log(LOG_FACILITY, 'Warning, LiveReload enabled but not watching for updates');
+                }
+
                 Object.getOwnPropertyNames(outputs.newOrChanged).forEach(function (output) {
                     livereload.reload.call(livereload, output);
                 });

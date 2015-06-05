@@ -92,13 +92,9 @@
                 livereload.init(this);
             },
             onbuild: function (outputs) {
-                if (!this.options.watch) {
-                    this.log(LOG_FACILITY, 'Warning, LiveReload enabled but not watching for updates');
-                }
+                !this.options.watch && this.log(LOG_FACILITY, 'Warning, LiveReload enabled but not watching for updates');
 
-                Object.getOwnPropertyNames(outputs.newOrChanged).forEach(function (output) {
-                    livereload.reload.call(livereload, output);
-                });
+                livereload.reload.call(livereload, Object.getOwnPropertyNames(outputs.newOrChanged));
             }
         };
     };

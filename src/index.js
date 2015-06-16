@@ -56,20 +56,23 @@
             return;
         }
 
-        var connections = that._connections;
+        var displayableUrls = linq(urls).take(5).run(),
+            connections = that._connections;
 
         connections = Object.getOwnPropertyNames(connections).map(function (id) { return connections[id]; });
 
-        if (!connections.length) {
+        if (!urls.length || !connections.length) {
             return;
         }
 
-        that._publishjs.log(LOG_FACILITY, [
-            'Pushed ',
+        this._publishjs.log(LOG_FACILITY, [
+            'Pushing ',
             urls.length,
-            ' change(s) to ',
+            ' update(s) to ',
             connections.length,
-            ' client(s)'
+            ' browser(s), including ',
+            displayableUrls.join(', '),
+            (urls.length === displayableUrls.length ? '' : '\u2026')
         ].join(''));
 
         connections.forEach(function (connection) {

@@ -22,7 +22,7 @@
     "async-linq": "^1.0.2",
     "livereload-js": "^2.2.2",
     "livereload-server": "^0.2.3",
-    "publishjs": "git:git@github.com:candrholdings/publishjs.git"
+    "publishjs": "*"
   },
   "devDependencies": {
     "async": "^1.0.0",

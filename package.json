@@ -1,6 +1,6 @@
 {
   "name": "publishjs-livereload",
-  "version": "0.0.2-dev",
+  "version": "0.0.3",
   "description": "Integrate LiveReload with PublishJS",
   "keywords": [
     "livereload",
@@ -22,7 +22,7 @@
     "async-linq": "^1.0.2",
     "livereload-js": "^2.2.2",
     "livereload-server": "^0.2.3",
-    "publishjs": "*"
+    "publishjs": "^0.0.3"
   },
   "devDependencies": {
     "async": "^1.0.0",
